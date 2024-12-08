@@ -1,0 +1,34 @@
+public
+// ---
+
+{ interval | start: $T, stop: $T, step: $T }
+
+/* creation */
+[ start to: stop by: step | $T, $T -> interval of: $T |
+  { start: start, stop: stop, step: step } ]
+
+/* iteration */
+[ interval do: block | interval of: $T, $B |
+  assert: start ≤ stop
+  start to: stop by: step do: block ]
+
+[ interval reverse-do: block | interval of: $T, $B |
+  assert: start ≤ stop
+  stop to: start by: step reverse-do: block ]
+
+/* accessing */
+[ interval first | interval of: $T -> $T | start ]
+[ interval last  | interval of: $T -> $T | stop ]
+
+
+private
+// ----
+
+/* iteration */
+[ start to: stop by: step do: block | $T, $T, $B |
+  block evaluate: start
+  start + step ≥ stop else: [ start + step to: stop do: block ] ]
+
+[ start to: stop by: step reverse-do: block | $T, $T, $B |
+  block evaluate: stop
+  start < stop - step else: [ start to: stop - step do: block ] ]

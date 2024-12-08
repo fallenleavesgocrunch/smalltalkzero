@@ -1,0 +1,33 @@
+public
+// ---
+
+import: 'core/sequenceable'
+
+{ unordered-list |
+  elements: &(array of: $T),
+  length: int,
+  allocator: &memory-allocator }
+
+{ list-error | enum | success, not-found }
+
+/* adding / removing */
+[ list add: element | &unordered-list of: $T, $T |
+  length ≤ elements length else: [ grow ]
+  elements[length] = element
+  length += 1 ]
+
+[ list remove: element | &unordered-list of: $T, $T -> list-error |
+  index? = index-of: element
+  index == not-found then: [ ^not-found ]
+  length == 1 then: [ ^length = 0 ]
+  length -= 1
+  element[index] = element[length] ]
+
+
+private
+// ----
+
+[ list grow | &unordered-list of: $T |
+  replacement = allocator allocate: elements length * 2 of: $T
+  replacement copy: elements
+  elements = replacement ]

@@ -1,0 +1,9 @@
+public
+// ---
+
+/* accessing */
+[ sequenceable first | ($C is-a: sequenceable) -> $C element-class |
+  sequenceable[0] ]
+
+[ sequenceable last  | ($C is-a: sequenceable) -> $C element-class |
+  sequenceable[length - 1] ]

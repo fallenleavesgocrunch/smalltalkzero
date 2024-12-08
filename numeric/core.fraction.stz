@@ -1,0 +1,4 @@
+public
+// ---
+
+{ fraction | numerator: int, denominator: int }

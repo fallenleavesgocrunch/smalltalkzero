@@ -1,0 +1,4 @@
+public
+// ---
+
+[ assert: assertion | bool | assertion else: [ panic ] ]

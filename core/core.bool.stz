@@ -1,0 +1,8 @@
+public
+// ---
+
+{ bool | value: uint8 }
+
+[ a & b | bool, bool -> bool | (uint8 cast: a) bit-and: (uint cast: b) ]
+[ a | b | bool, bool -> bool | (uint8 cast: a) bit-or: (uint cast: b) ]
+[ b not | bool -> bool | 1 - (uint8 cast: b) ]

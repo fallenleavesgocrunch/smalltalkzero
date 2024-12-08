@@ -1,0 +1,15 @@
+public
+// ---
+
+{ unit | id: fraction }
+{ base-unit | id: uint, moniker: string }
+
+/* base units */
+{ metre   | base-unit | id: 2,  moniker: 'm' }
+{ second  | base-unit | id: 3,  moniker: 's' }
+{ gram    | base-unit | id: 5,  moniker: 'g' }
+{ kelvin  | base-unit | id: 7,  moniker: 'L' }
+{ ampere  | base-unit | id: 11, moniker: 'A' }
+{ mole    | base-unit | id: 13, moniker: 'mol' }
+{ candela | base-unit | id: 17, moniker: 'cd' }
+{ byte    | base-unit | id: 19, moniker: 'b' }

@@ -1,0 +1,9 @@
+public
+// ---
+
+{ processor |
+  processes: (array of: &process),
+  file-handles: (array of: file-handle), }
+
+private
+// ----
