@@ -1,0 +1,21 @@
+public
+// ---
+
+number-error = ( overflow, divide-by-zero, )
+
+number-t = { trait |
+  requires: (
+    [ a + b | number-t, number-t -> number-t ],
+    [ a - b | number-t, number-t -> number-t + number-error ],
+    [ a * b | number-t, number-t -> number-t ],
+    [ a / b | number-t, number-t -> number-t + number-error ],
+    [ a % b | number-t, number-t -> number-t + number-error ],
+    [ a ^ b | number-t, number-t -> number-t ],
+    [ a ! b | number-t, number-t -> number-t ], )
+
+
+signed-number-t = { trait |
+  requires: (
+    ... number-t,
+    [ -a    | number-t -> signed-number-t ],
+    [ a - b | signed-number-t, signed-number-t -> signed-number-t ], )

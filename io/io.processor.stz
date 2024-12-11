@@ -1,9 +1,11 @@
 public
 // ---
 
-{ processor |
-  processes: (array of: &process),
-  file-handles: (array of: file-handle), }
+processor = { class |
+  variables: (
+    processes: (list of: &process),
+    file-handles: (list of: file-handle), ) }
+
 
 private
 // ----

@@ -1,0 +1,17 @@
+public
+
+maybe = { class |
+  parameters: (of: object-t,),
+  variables:  (value: of, real: bool,) }
+
+
+/* evaluation */
+[ maybe? then: block
+| maybe, ((maybe? of,) -> ø) -> maybe?
+| real then: [ block evaluate: value ]
+  maybe? ]
+
+[ maybe? else: block
+| maybe, (-> ø) -> maybe?
+| real else: [ block evaluate ]
+  maybe? ]

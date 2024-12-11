@@ -1,0 +1,56 @@
+private
+// ----
+
+signed-integer   = class: {} inherits: number
+unsigned-integer = class: {} inherits: number
+
+public
+// ---
+
+u8  = class: { bits: (binary-of: 8) }
+      inherit: unsigned-integer
+
+u16 = class: { bits: (binary-of: 16) }
+      inherit: unsigned-integer
+
+u32 = class: { bits: (binary-of: 32) }
+      inherit: unsigned-integer
+
+u64 = class: { bits: (binary-of: 64) }
+      inherit: unsigned-integer
+
+s8  = class: { bits: (binary-of: 8) }
+      inherit: signed-integer
+
+s16 = class: { bits: (binary-of: 16) }
+      inherit: signed-integer
+
+s32 = class: { bits: (binary-of: 32) }
+      inherit: signed-integer
+
+s64 = class: { bits: (binary-of: 64) }
+      inherit: signed-integer
+
+
+int  = s64
+uint = u64
+
+
+[ a + b | u8 , u8  -> union: { u8 , number-error } | a bits + b bits ]
+[ a + b | u16, u16 -> union: { u16, number-error } | a bits + b bits ]
+[ a + b | u32, u32 -> union: { u32, number-error } | a bits + b bits ]
+[ a + b | u64, u64 -> union: { u64, number-error } | a bits + b bits ]
+
+/* signed and unsigned combined */
+[ a + b | u8 , s16 -> s16 | a bits sign-extend-to-16 + b bits ]
+[ a + b | u8 , s32 -> s32 | a bits sign-extend-to-32 + b bits ]
+[ a + b | u8 , s64 -> s64 | a bits sign-extend-to-64 + b bits ]
+[ a + b | u16, s32 -> s32 | a bits sign-extend-to-32 + b bits ]
+[ a + b | u16, s64 -> s64 | a bits sign-extend-to-64 + b bits ]
+[ a + b | u32, s64 -> s64 | a bits sign-extend-to-64 + b bits ]
+
+
+// private
+[ sum: integers | array-of: u8 -> union: { u8, number-error } |
+  bits = sum: (integers map: [ integer | integer bits ])
+  { bits: (sum first: 8) } ]

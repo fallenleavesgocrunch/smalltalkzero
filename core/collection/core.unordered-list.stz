@@ -1,0 +1,48 @@
+public
+// ---
+
+list = { class |
+  parameters: (of: object-t,),
+  traits: (sequenceable-t of: of,),
+  variables: (
+    elements: &array of: of,
+    length: uint,
+    allocator: &memory-allocator,) }
+
+list-error = ( no-error = 0, not-found, could-not-grow )
+
+
+/* adding / removing */
+[ list add: element
+| &list, of -> list-error
+| length ≤ elements length else: [
+    grow-status = grow
+    grow-status == could-not-grow then: [ ^could-not-grow ] ]
+  elements[length] = element
+  length += 1
+  ^no-error ]
+
+[ list remove: element
+| &list, of -> list-error
+| index? = index-of: element
+  index == not-found then: [ ^not-found ]
+
+  length == 1 then: [
+    length = 0
+    ^no-error ]
+
+  length -= 1
+  element[index] = element[length]
+  ^no-error ]
+
+
+private
+// ----
+
+[ list grow
+| &list of: of -> allocation-error
+| replacement? = allocator allocate: elements length * 2 of: $T
+  replacement = replacement? else: [ ^allocation-error ]
+  replacement copy: elements
+  elements = replacement
+  ^no-error ]

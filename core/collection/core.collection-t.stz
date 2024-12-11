@@ -1,0 +1,14 @@
+public
+// ---
+
+collection-t = { trait |
+  parameters; (of: object-t,),
+  requires: (
+    [ length | collection-t -> uint,
+    [ sequence[index] | sequenceable-t, uint -> of ], ) }
+
+
+/* iterating */
+[ collection do: block
+| &collection-t, ((collection of,) -> ø) -> ø
+| [0::length] do: [ index | block evaluate: collection[index] ] ]

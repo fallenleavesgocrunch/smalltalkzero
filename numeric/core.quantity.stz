@@ -1,8 +1,0 @@
-public
-// ---
-
-{ quantity | amount: ($T is-a: number), u: unit }
-
-/* arithmetic */
-[ a + b | quantity of: $T, quantity of: $U -> quantity of: $V |
-  { amount: a amount + b amount, u: a u + b u } ]

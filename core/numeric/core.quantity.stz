@@ -1,0 +1,11 @@
+public
+// ---
+
+quantity = { class |
+  traits: (number-t,),
+  variables: (v: number-t, u: unit,) }
+
+/* arithmetic */
+[ a + b
+| quantity, quantity -> quantity
+| { v: a v + b v, u: a u + b u } ]

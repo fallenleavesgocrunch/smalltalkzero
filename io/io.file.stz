@@ -1,28 +1,28 @@
 public
 // ---
 
-file-handle = distinct: int
+file-handle = { class | variables: (os-handle: int,) }
 
-{ file-error | enum | no-error, an-error }
+file-error = (no-error, an-error,)
 
-[ io open: filename mode: mode |
-  &processor, string, file-mode -> union{file-handle, file-error} |
-  handle = os.open: filename as-c-string, mode & O_NONBLOCK
-  handle == -1 then: [ ^os-error-mapping[os.errno] ]
-  io register-file-handle: handle
-  handle ]
+[ io open: filename mode: mode
+| &processor, string, file-mode -> file-handle + file-error
+| os-handle = os.open: filename as-c-string, mode & O_NONBLOCK
+  os-handle == -1 then: [ ^os-error-mapping[os.errno] ]
+  io register-file-handle: os-handle
+  {file-handle | os-handle: os-handle} ]
 
-[ io close: handle |
-  &processor, file-handle -> file-error |
-  error = os.close: handle
-  if error == -1 then: [ ^on-error-mapping[os.errno ]
-  io deregister-file-handle: (int cast: handle)
+[ io close: handle
+| &processor, file-handle -> file-error
+| error = os.close: handle os-handle
+  if error == -1 then: [ ^on-error-mapping[os.errno] ]
+  io deregister-file-handle: handle os-handle
   ^no-error ]
 
 
 private
 // ----
-{ os-error-mapping | map of: int to: file-error |
+os-error-mapping = ( int, file-error |
   EBADF: an-error,
   EINTR: an-error,
   EIO: an-error, }

@@ -1,0 +1,22 @@
+public
+// ---
+
+interval = { class |
+  parameters: (of: number-t = int,),
+  variables:  (... range of: of, step: of,), }
+
+
+/* creation */
+[ start to: stop by: step
+| number-t, number-t, number-t -> interval of: step
+| { start: start, stop: stop, step: step } ]
+
+
+/* accessing */
+[ interval first
+| interval -> interval start
+| start ]
+
+[ interval last
+| interval -> interval stop
+| stop ]

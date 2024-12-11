@@ -1,0 +1,6 @@
+public
+// ---
+
+unicode-string = { class |
+  traits: (sequenceable-t of: unicode-character,)
+  variables: (elements: (array of: unicode-character,) }

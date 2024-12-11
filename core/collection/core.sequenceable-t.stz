@@ -1,0 +1,17 @@
+public
+// ---
+
+sequenceable-t = { trait |
+  parameters: (of: object-t,),
+  requires: (
+    ... collection-t of: of,) }
+
+
+/* accessing */
+[ sequence first
+| sequenceable-t -> sequence of
+| sequence[0] ]
+
+[ sequence last
+| sequenceable-t -> sequence of
+| sequence[length - 1] ]

@@ -1,0 +1,4 @@
+public
+// ---
+
+faction = { class | variables: (numerator: int, denominator: int,) }

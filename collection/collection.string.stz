@@ -1,4 +1,0 @@
-public
-// ---
-
-{ unicode-string | elements: (array of: unicode-character) }

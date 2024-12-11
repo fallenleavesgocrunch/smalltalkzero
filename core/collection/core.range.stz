@@ -1,0 +1,47 @@
+public
+// ---
+
+range = { class |
+  parameters: (of: number-t = int,),
+  traits:     (sequenceable-t of: of,),
+  variables:  (start: of, stop: of,}
+
+
+/* creation */
+[ start to: stop
+| assert start == stop
+  number-t, number-t -> range of: start
+| {start: start, stop: stop} ]
+
+
+/* iteration */
+[ range do: block
+| range, (range of,) -> ø
+| assert: start ≤ stop
+  start to: stop step: step do: block ]
+
+[ range reverse-do: block
+| range, (range of,) -> ø
+| assert: start ≤ stop
+  stop to: start step: -step do: block ]
+
+[ start to: stop by: step do: block
+| number-t, number-t, number-t, (step,) -> ø
+| block evaluate: start
+  start + step ≥ stop else: [ start + step to: stop do: block ] ]
+
+[ range step
+| range -> range of
+| 1 ]
+
+
+/* collection-t */
+[ range length
+| range -> uint
+| stop - start + 1 ]
+
+[ range[index]
+| range, uint -> range of
+| idx = index + start
+| assert: idx ≤ stop
+  idx ]
