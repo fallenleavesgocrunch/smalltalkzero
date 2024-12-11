@@ -1,6 +1,8 @@
 public
 // ---
 
-unicode-string = { class |
-  traits: (sequenceable-t of: unicode-character,)
-  variables: (elements: (array of: unicode-character,) }
+string = { class |
+  parameters: (of: character-t = u8,),
+  constants:  (character-class: of,),
+  traits: (sequenceable-t of: character-class,)
+  variables: (elements: (array of: character-class,),) }

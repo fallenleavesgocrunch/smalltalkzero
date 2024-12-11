@@ -3,14 +3,15 @@ public
 
 memory-address = { class |
   parameters: (of: object-t,),
-  variables:  (address: uint,), }
+  constants:  (element-class: of,),
+  variables:  (location: uint,), }
 
 
 /* accessing */
 [ address[index]
-| memory-address, int -> of
-| platform get: address + index type: of ]
+| memory-address, int -> element-class
+| platform get: location + index type: element-class ]
 
 [ address[index] = object
-| memory-address, int, of -> ø
-| platform set: address + index value: object ]
+| memory-address, int, element-class -> ø
+| platform set: location + index value: object ]

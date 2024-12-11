@@ -3,8 +3,9 @@ public
 
 range = { class |
   parameters: (of: number-t = int,),
-  traits:     (sequenceable-t of: of,),
-  variables:  (start: of, stop: of,}
+  constants:  (scalar-class: of,),
+  traits:     (sequenceable-t of: scalar-class,),
+  variables:  (start: scalar-class, stop: scalar-class,}
 
 
 /* creation */
@@ -16,22 +17,26 @@ range = { class |
 
 /* iteration */
 [ range do: block
-| range, (range of,) -> ø
+| range, (scalar-class -> ø) -> ø
 | assert: start ≤ stop
   start to: stop step: step do: block ]
 
 [ range reverse-do: block
-| range, (range of,) -> ø
+| range, (scalar-class -> ø) -> ø
 | assert: start ≤ stop
   stop to: start step: -step do: block ]
 
+[ start to: stop do: block
+| number-t, number-t, (start -> ø) -> ø
+| start to: stop by: 1 do: block ]
+
 [ start to: stop by: step do: block
-| number-t, number-t, number-t, (step,) -> ø
+| number-t, number-t, number-t, (step -> ø) -> ø
 | block evaluate: start
   start + step ≥ stop else: [ start + step to: stop do: block ] ]
 
 [ range step
-| range -> range of
+| range -> scalar-class
 | 1 ]
 
 
@@ -41,7 +46,7 @@ range = { class |
 | stop - start + 1 ]
 
 [ range[index]
-| range, uint -> range of
+| range, uint -> scalar-class
 | idx = index + start
-| assert: idx ≤ stop
+| assert: idx ≤ stop
   idx ]

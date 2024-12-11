@@ -3,7 +3,8 @@ public
 
 interval = { class |
   parameters: (of: number-t = int,),
-  variables:  (... range of: of, step: of,), }
+  constants; (scalar-class: of,)
+  variables:  (... range of: scalar-class, step: scalar-class,), }
 
 
 /* creation */

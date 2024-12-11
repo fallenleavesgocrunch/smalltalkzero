@@ -1,0 +1,16 @@
+public
+// ---
+
+magnitude-t = { trait |
+  requires: (
+    ..comparable-t,
+    [ a < b  | magnitude-t, magnitude-t -> bool ],
+    [ a ≤ b  | magnitude-t, magnitude-t -> bool ], ) }
+
+[ a > b
+| magnitude-t, magnitude-t -> bool
+| b ≤ a ]
+
+[ a ≥ b
+| magnitude-t, magnitude-t -> bool
+| b < a ]

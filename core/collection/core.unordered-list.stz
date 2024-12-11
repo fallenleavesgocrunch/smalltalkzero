@@ -3,9 +3,10 @@ public
 
 list = { class |
   parameters: (of: object-t,),
-  traits: (sequenceable-t of: of,),
-  variables: (
-    elements: &array of: of,
+  constants:  (element-class: of,),
+  traits:     (sequenceable-t of: element-class,),
+  variables:  (
+    elements: &array of: element-class,
     length: uint,
     allocator: &memory-allocator,) }
 
@@ -14,7 +15,7 @@ list-error = ( no-error = 0, not-found, could-not-grow )
 
 /* adding / removing */
 [ list add: element
-| &list, of -> list-error
+| &list, element-class -> list-error
 | length ≤ elements length else: [
     grow-status = grow
     grow-status == could-not-grow then: [ ^could-not-grow ] ]
@@ -23,7 +24,7 @@ list-error = ( no-error = 0, not-found, could-not-grow )
   ^no-error ]
 
 [ list remove: element
-| &list, of -> list-error
+| &list, element-class -> list-error
 | index? = index-of: element
   index == not-found then: [ ^not-found ]
 

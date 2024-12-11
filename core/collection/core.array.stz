@@ -1,0 +1,26 @@
+public
+// ---
+
+array = { class |
+  parameters: (of: object-t, length: uint),
+  constants:  (element-class: of,)
+  traits:     (sequenceable-t of: element-class,),
+  variables:  (origin: (memory-address of: element-class),) }
+
+
+/* collection-t */
+[ _ length
+| array -> uint
+| length ]
+
+[ _ [index]
+| array, uint -> element-class
+| assert 0 ≤ index < length
+  origin[index] ]
+
+
+/* mutable-collection-t */
+[ _ [index] = element
+| array, uint, of -> ø
+| assert 0 ≤ index < length
+  origin[index] = element ]
