@@ -1,16 +1,15 @@
-public
-// ---
+using: 'log'
 
-range = { class |
-  parameters: (of: number-t = int,),
-  constants:  (scalar-class: of,),
-  traits:     (sequenceable-t of: scalar-class,),
-  variables:  (start: scalar-class, stop: scalar-class,}
+range = (
+      @of: (scalar-class: number-t,)
+  #traits: (iterable-t of: scalar-class, sequential-t of: scalar-class,)
 
+    start: scalar-class
+     stop: scalar-class)
 
 /* creation */
 [ start to: stop
-| assert start == stop
+| assert: start == stop
   number-t, number-t -> range of: start
 | {start: start, stop: stop} ]
 
@@ -40,7 +39,7 @@ range = { class |
 | 1 ]
 
 
-/* collection-t */
+/* iterable-t */
 [ range length
 | range -> uint
 | stop - start + 1 ]
@@ -48,5 +47,5 @@ range = { class |
 [ range[index]
 | range, uint -> scalar-class
 | idx = index + start
-| assert: idx ≤ stop
+| log assert: idx ≤ stop
   idx ]

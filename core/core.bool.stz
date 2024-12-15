@@ -1,7 +1,4 @@
-public
-// ---
-
-bool = { class | variables: (v: u8,) }
+bool = ( v: u8, )
 
 [ a & b | bool, bool -> bool | (u8 cast: a) bit-and: (u8 cast: b) ]
 [ a | b | bool, bool -> bool | (u8 cast: a) bit-or: (u8 cast: b) ]

@@ -1,23 +1,19 @@
-public
+maybe-t = ( @of: (object-class: object-t,) )
 
-maybe-t = { trait |
-  parameters: (of: object-t,),
-  constants:  (object-class: of,) }
+maybe = (
+  @of: (object-class: object-t,)
+  #traits: (maybe-t of: object-class,)
 
-maybe = { class |
-  parameters: (of: object-t,),
-  constants:  (object-class: of,),
-  traits:     (maybe-t of: object-class,),
-  variables:  (value: object-class, instantiated?: bool,) }
+  #scope: private
+  value: object-class
+  instantiated?: bool )
 
 
 /* evaluation */
-[ maybe then: block
-| maybe-t, (object-class -> ø) -> maybe?
-| instantiated? then: [ block evaluate: value ]
-  maybe ]
+[ maybe then: block | maybe-t, (object-class -> ø) -> maybe? |
+  instantiated? then: [ block evaluate: value ]
+  ^maybe ]
 
-[ maybe else: block
-| maybe-t, (-> ø) -> maybe?
-| instantiated? else: [ block evaluate ]
-  maybe ]
+[ maybe else: block | maybe-t, (-> ø) -> maybe? |
+  instantiated? else: [ block evaluate ]
+  ^maybe ]

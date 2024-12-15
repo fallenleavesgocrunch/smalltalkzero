@@ -1,7 +1,4 @@
-public
-// ---
-
-file-handle = { class | variables: (os-handle: int,) }
+file-handle = ( os-handle: int, )
 
 file-error = (no-error, an-error,)
 
@@ -20,8 +17,7 @@ file-error = (no-error, an-error,)
   ^no-error ]
 
 
-private
-// ----
+#scope private
 os-error-mapping = ( int, file-error |
   EBADF: an-error,
   EINTR: an-error,

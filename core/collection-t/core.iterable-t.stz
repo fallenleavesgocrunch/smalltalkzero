@@ -1,0 +1,29 @@
+iterable-t = (
+       @of: (element-class: object-t,)
+  #methods: (
+    [ _ length | &iterable-t -> uint ],
+    [ _[index] | &iterable-t, uint -> element-class ] ) )
+
+iterable-error = ( no-error = 0, not-found, )
+
+
+/* iterating */
+[ _ do: block | &iterable-t, (_ element-class -> ø) -> ø |
+  0 to: length do: [ index |
+    block evaluate: collection[index] ] ]
+
+[ _ do: block | &iterable-t, (uint, _ element-class -> ø) -> ø |
+  0 to: length do: [ index |
+    block evaluate: (index, collection[index]) ] ]
+
+
+/* searching */
+[ _ index-of: element | &iterable-t, _ element-class -> uint + collection_error |
+  do: [ index, each | each == element then: [ ^index ] ]
+  ^not-found ]
+
+
+/* testing */
+[ _ includes: element | &iterable-t, _ element-class -> bool |
+  _ do: [:each | each == element then: [ ^true ] ]
+  ^false ]

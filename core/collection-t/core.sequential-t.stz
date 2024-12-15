@@ -1,0 +1,6 @@
+sequential-t = ( @of: (element-class: object-t), )
+
+
+/* accessing */
+[ _ first | sequential-t -> _ element-class | _[0] ]
+[ _ last  | sequential-t -> _ element-class | _[length - 1] ]

@@ -1,13 +1,10 @@
-public
+reference = (
+      @of: (object-class: object-t,)
+  #traits: (maybe-t of: object-class,)
 
-reference = { class |
-  parameters: (of: object-t,),
-  constants:  (object-class: (memory-address of: of),),
-  traits:     (maybe-t of: object-class,),
-  variables:  (address: object-class,) }
+   #scope: private
+  address: (memory-address of: object-class) )
 
 
 private
-[ maybe instantiated?
-| reference -> bool
-| address ≥ 0 ]
+[ maybe instantiated? | reference -> bool | address ≥ 0 ]

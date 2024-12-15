@@ -1,0 +1,1 @@
+[ logger assert: assertion | bool | assertion else: [ panic ] ]

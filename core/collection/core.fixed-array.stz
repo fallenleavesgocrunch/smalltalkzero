@@ -1,24 +1,22 @@
 using: 'log'
 
-array = (
+fixed-array = (
       @of: (element-class: object-t,)
+  @length: (length: uint,)
   #traits: (iterable-t of: element-class, sequential-t of: element-class,)
 
-   #scope: public
-   length: uint
-
    #scope: package
-   origin: (memory-address of: element-class) )
+   origin: (memory-address of: element-class))
 
 
 /* iterable-t */
-[ _ length | &array -> uint | array class length ]
+[ _ length | &fixed-array -> uint | fixed-array class length ]
 
-[ _[index] | &array, uint -> element-class
+[ _[index] | &fixed-array, uint -> element-class
 | log assert: 0 ≤ index < length
   ^origin[index] ]
 
 /* mutable-iterable-t */
-[ _[index] = element | &!array, uint, _ element-class -> ø
+[ _[index] = element | &!fixed-array, uint, _ element-class -> ø
 | log assert: 0 ≤ index < length
   origin[index] = element ]

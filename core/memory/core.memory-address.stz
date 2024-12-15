@@ -1,17 +1,13 @@
-public
-// ---
+memory-address = (
+  @of: (element-class: object-t,),
 
-memory-address = { class |
-  parameters: (of: object-t,),
-  constants:  (element-class: of,),
-  variables:  (location: uint,), }
+  #scope: private
+  location: uint )
 
 
 /* accessing */
-[ address[index]
-| memory-address, int -> element-class
-| platform get: location + index type: element-class ]
+[ _[index] | memory-address, int -> _ element-class |
+  platform get: location + index type: _ class element-class ]
 
-[ address[index] = object
-| memory-address, int, element-class -> ø
-| platform set: location + index value: object ]
+[ _[index] = object | memory-address, int, _ element-class -> ø |
+  platform set: location + index value: object ]

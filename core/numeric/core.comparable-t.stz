@@ -1,0 +1,12 @@
+comparable-t = (
+  methods: (
+    [ a < b  | comparable-t, comparable-t -> bool ]
+    [ a ≤ b  | comparable-t, comparable-t -> bool ] ) )
+
+[ a > b
+| comparable-t, comparable-t -> bool
+| b ≤ a ]
+
+[ a ≥ b
+| comparable-t, comparable-t -> bool
+| b < a ]

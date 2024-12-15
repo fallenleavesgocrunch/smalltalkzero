@@ -1,49 +1,41 @@
-public
-// ---
+list = (
+        @of: (element-class: object-t,)
+    #traits: (iterable-t of: element-class, sequential-t of: element-class,)
 
-list = { class |
-  parameters: (of: object-t,),
-  constants:  (element-class: of,),
-  traits:     (sequenceable-t of: element-class,),
-  variables:  (
-    elements: &array of: element-class,
-    length: uint,
-    allocator: &memory-allocator,) }
+     #scope: public
+     length: uint
 
-list-error = ( no-error = 0, not-found, could-not-grow )
+     #scope: package
+   elements: &array of: element-class
+  allocator: &memory-allocator )
 
+
+[ _ capacity | &list -> uint | _ elements length ]
 
 /* adding / removing */
-[ list add: element
-| &list, element-class -> list-error
-| length ≤ elements length else: [
-    grow-status = grow
-    grow-status == could-not-grow then: [ ^could-not-grow ] ]
+[ _ add: element | &!list, element-class -> memory-error |
+  length == capacity then: [grow else: [ error | ^error ]]
   elements[length] = element
   length += 1
   ^no-error ]
 
-[ list remove: element
-| &list, element-class -> list-error
-| index? = index-of: element
-  index == not-found then: [ ^not-found ]
-
-  length == 1 then: [
-    length = 0
-    ^no-error ]
-
+[ _ remove-index: index | &!list, uint -> ø |
+  assert: 0 ≤ index < length
   length -= 1
-  element[index] = element[length]
+  length == 0 then: [^ø]
+  element[index] = element[length] ]
+
+[ _ remove: element | &!list, element-class -> iterable-error |
+  index? = index-of: element
+  index = index? else: [ error | ^error ]
+  remove-index: index
   ^no-error ]
 
 
-private
-// ----
-
-[ list grow
-| &list of: of -> allocation-error
-| replacement? = allocator allocate: elements length * 2 of: $T
-  replacement = replacement? else: [ ^allocation-error ]
+#scope: private
+[ _ grow | &!list -> memory-error |
+  replacement? = allocator allocate: elements length * 2 of: _ class element-class
+  replacement = replacement? else: [ error | ^error ]
   replacement copy: elements
   elements = replacement
   ^no-error ]

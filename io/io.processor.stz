@@ -1,11 +1,3 @@
-public
-// ---
-
-processor = { class |
-  variables: (
-    processes: (list of: &process),
-    file-handles: (list of: file-handle), ) }
-
-
-private
-// ----
+processor = (
+  processes: &list of: &process
+  file-handles: &list of: &file-handle)

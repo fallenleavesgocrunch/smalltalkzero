@@ -1,9 +1,10 @@
-public
-// ---
+quantity = (
+  #traits: (number-t,)
 
-quantity = { class |
-  traits: (number-t,),
-  variables: (v: number-t, u: unit,) }
+  #scope: private
+  v: number-t
+  u: unit )
+
 
 /* arithmetic */
 [ a + b

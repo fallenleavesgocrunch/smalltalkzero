@@ -1,10 +1,12 @@
-public
-// ---
+using: 'log'
 
-interval = { class |
-  parameters: (of: number-t = int,),
-  constants; (scalar-class: of,)
-  variables:  (... range of: scalar-class, step: scalar-class,), }
+interval = (
+      @of: (scalar-class: number-t,)
+  #traits: (iterable-t of: scalar-class, sequential-t of: scalar-class,)
+
+    start: scalar-class
+     stop: scalar-class
+     step: scalar-class) )
 
 
 /* creation */
@@ -13,11 +15,10 @@ interval = { class |
 | { start: start, stop: stop, step: step } ]
 
 
-/* accessing */
-[ interval first
-| interval -> interval start
-| start ]
+/* iterable-t */
+[ _ length | interval -> uint | stop - start + 1 ]
 
-[ interval last
-| interval -> interval stop
-| stop ]
+[ _[index] | interval, uint -> _ scalar-class |
+  idx = index + start
+  log assert: idx ≤ stop
+  ^idx ]
