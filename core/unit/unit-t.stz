@@ -1,0 +1,4 @@
+#package core
+
+base-unit-t    = (@symbol: string,)
+derived-unit-t = (@base: base-unit-t, @scale: int, @symbol: string)

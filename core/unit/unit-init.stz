@@ -1,0 +1,100 @@
+#package core
+
+unitless = base-unit-t symbol: empty'empty'
+primary-unit-library = {&unit-library | new init}
+primary-unit-library unit-ids[unitless]: 1
+
+meter    = base-unit-t symbol: 'm'
+second   = base-unit-t symbol: 's'
+gram     = base-unit-t symbol: 'g'   // the si unit is kilogram but that makes the init code harder
+mole     = base-unit-t symbol: 'mol'
+kelvin   = base-unit-t symbol: 'L'
+ampere   = base-unit-t symbol: 'A'
+candela  = base-unit-t symbol: 'cd'
+
+// useful but not an SI unit
+byte     = base-unit-t symbol: 'B'
+
+// controversial apparently
+
+// si scaled versions of base units
+( meter, second, gram, mole, kelvin, ampere, candela, ) do: [ unit | register-derived-si-prefixes: si-negative-prefixes ]
+( meter,         gram, mole, kelvin, ampere, candela, byte ) do: [ unit | register-derived-si-prefixes: si-positive-prefixes ]
+
+// si approved derived units
+hertz = derived-unit-t base: 1 / second symbol: 'Hz'
+newton = derived-unit-t base: kilogram * meter * (second ** -2) symbol: 'N'
+pascal = derived-unit-t base: newton * (meter ** -2) symbol: 'Pa'
+joule = derived-unit-t base: newton * meter symbol: 'J'
+watt = derived-unit-t base: joule / second symbol: 'W'
+coulomb = derived-unit-t base: ampere * second symbol: 'C'
+volt = derived-unit-t base: watt / ampere symbol: 'V'
+farad = derived-unit-t base: coulomb / volt symbol: 'F'
+ohm = derived-unit-t base: volt / ampere symbol: 'Ω'
+siemens = derived-unit-t base: ampere / volt symbol: 'S'
+webere = derived-unit-t base: volt * second symbol: 'Wb'
+tesla = derived-unit-t base: weber * (meter ** -2) symbol: 'T'
+henry = derived-unit-t base: weber / ampere symbol: 'H'
+celcius = derived-unit-t base: kelvin symbol: 'ºC' offset: -273.15
+radian = base-unit-t symbol: 'rad'
+steradian = base-unit-t symbol: 'sr'
+lumen = derived-unit-t base: candela * steradian symbol: 'lm'
+lux = derived-unit-t base: lumen * (meter ** -2) symbol: 'lx'
+becquerel = derived-unit-t base: 1 / second symbol: 'Bq'
+gray = derived-unit-t base: joule / kilogram symbol: 'Gy'
+katal = derived-unit-t base: mole / second symbol: 'kat'
+
+( hertz, newton, pascal, joule, watt, coulomb, volt, farad, ohm, siemens, weber,
+  tesla, henry, celcius, radian, steradian, lumen, lux, becquerl, gray, katal, ) do: [ unit |
+    register-derived-si-prefixes: si-negative-prefixes
+    register-derived-si-prefixes: si-positive-prefixes ]
+
+// derived distance
+inch = derived-unit-t base: meter symbol: 'in' scale: 254 / 10_000
+foot = derived-unit-t base: meter symbol: "ft" scale: 3_048 / 10_000
+yard = derived-unit-t base: meter symbol: 'yd' scale: 9_144 / 10_000
+mile = derived-unit-t base: meter symbol: 'mi' scale: 1_609_344 / 1_000
+light-year = derived-unit-t base: meter symbol: 'lightyear' scale: 9_460_500_000_000_000
+parsec = derived-unit-t base: meter symbol: 'parsec' scale: 30_856_770_000_000_000
+
+// derived time
+minute    = derived-unit-t base: second symbol: 'min' scale: 60
+hour      = derived-unit-t base: second symbol: 'hr' scale: 60
+day       = derived-unit-t base: second symbol: 'd' scale: 24
+week      = derived-unit-t base: second symbol: 'wk' scale: 7
+year      = derived-unit-t base: second symbol: 'y' scale: 315_569_259_747 / 10_000
+decade    = derived-unit-t base: second symbol: 'decade' symbol: 'decade' scale: 315_569_259_747 / 1_000
+century   = derived-unit-t base: second symbol: 'century' symbol: 'century' scale: 315_569_259_747 / 100
+millenium = derived-unit-t base: second symbol: 'millenium' symbol: 'millenium' scale: 315_569_259_747 / 10
+
+// derived weight
+tonne = derived-unit-t base: gram symbol: 't' scale: 1_000_000
+stone = derived-unit-t base: gram symbol: 'st' scale: 6_350_29_318 / 100_000
+pound = derived-unit-t base: gram symbol: 'lb' scale: 453_59_237 / 100_000
+ounce = derived-unit-t base: gram symbol: 'oz' scale: 28_349_523_125 / 1_000_000_000
+carat = derived-unit-t base: gram symbol: 'ct' scale: 2 / 10
+
+// derived information
+bit = derived-unit-t base: byte symbol: 'b' scale: 1 / 8
+bit register-si-derived-units: si-positive-prefixes scale: 1 / 8
+
+// derived angle
+degree = derived-unit-t base: radian symbol: 'º' scale: 1_000_000_000_000 / 57_295_779_513_082
+arc-minute = derived-unit-t base: radian symbol: "'" scale: 1000000000000 / 57295779513082 / 60
+arc-second = derived-unit-t base: radian symbol: '"' scale: 1000000000000 / 57295779513082 / 3600
+
+// derived areas
+meter-squared = meter * meter
+acre = derived-unit-t base: meter-squared symbol: 'ac' scale: 40_468_564_224 / 10_000_000
+hectare = derived-unit-t base: meter-squared symbol: 'ha' scale: 10_000
+
+// derived powers
+horse-power = derived-unit-t base: watt base symbol: 'hp' scale: 7457 / 10
+
+// derived pressures
+atmosphere = derived-unit-t base: pascal base symbol: 'atm' scale: 101_325
+bar = derived-unit-t base: pascal base symbol: 'bar' scale: 100_000
+psi = derived-unit-t base: pascal base symbol: 'psi' scale: 6_894_757 / 1_000
+
+// derived volumes
+litre = derived-unit-t base: m ** -3 symbol: 'L' scale: 1 / 1_000

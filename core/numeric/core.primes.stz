@@ -1,0 +1,15 @@
+[ n seive-of-sundaram-into: primes | uint, &list of: uint -> ø |
+  limit = (n - 1) / 2
+
+  marked: (array of: bool length: limit + 1)
+  marked fill-with: false
+
+  1 to: limit do: [ i |
+    j = i
+    [(i + j + 2 * i * j) ≤ limit] while-true: [
+      marked[i + j + 2 * i * j] = true
+      j += 1]
+
+  n ≥ 2 then: [list add: 2]
+  1 to: limit do: [ i |
+    marked[i] then: [list add: 2 * i + 1] ] ]

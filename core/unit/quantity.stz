@@ -1,0 +1,82 @@
+#package core
+
+quantity = (
+  #traits: (number-t,)
+  @of: (unit: unit-t)
+  magnitude: number-t )
+
+
+/* number-t */
+[ a + b
+| quantity of: a unit, quantity of: a unit -> quantity of: a unit
+| {magnitude: a magnitude + b magnitude} ]
+
+[ a + b
+| quantity of: a unit base, quantity of: a unit base -> quantity of: a unit base
+| {magnitude: a magnitude + b magnitude * b unit conversion / a unit conversion} ]
+
+[ a - b
+| quantity of: a unit, quantity of: a unit -> quantity of: a unit
+| {magnitude: a magnitude - b magnitude} ]
+
+[ a - b
+| quantity of: a unit base, quantity of: a unit base -> quantity of: a unit base
+| {magnitude: a magnitude - b magnitude * b unit conversion / a unit conversion} ]
+
+[ a * b
+| quantity, quantity -> quantity of: a unit * b unit
+| {magnitude: a magnitude * b magnitude} ]
+
+[ a * magnitude
+| quantity, number-t -> quantity of: a unit
+| {magnitude: a magnitude * magnitude} ]
+
+[ magnitude * a
+| number-t, quantity -> quantity of: a unit
+| {magnitude: magnitude * a magnitude} ]
+
+[ a / b
+| quantity, quantity -> quantity of: a unit / b unit
+| {magnitude: a magnitude / b magnitude} ]
+
+[ a / magnitude
+| quantity, number-t -> quantity of: a unit
+| {magnitude: a magnitude / magnitude} ]
+
+[ magnitude / a
+| number-t, quantity -> quantity of: 1 / a unit
+| {magnitude: magnitude * a magnitude} ]
+
+[ a floor
+| quantity -> a
+| {magnitude: magnitude floor} ]
+
+[ a ceiling
+| quantity -> a
+| {magnitude: magnitude ceiling} ]
+
+[ a round
+| quantity -> a
+| {magnitude: magnitude round} ]
+
+[ a truncate
+| quantity -> a
+| {magnitude: magnitude truncate} ]
+
+
+/* comparable-t */
+[ a < b
+| quantity of: a unit base, quantity of: a unit base -> bool
+| a magnitude < b magnitude ]
+
+[ a == b
+| quantity of: a unit base, quantity of: a unit base -> bool
+| a magnitude == b magnitude ]
+
+
+/* hashable-t */
+[ a hash | quantity | magnitude hash + unit hash ]
+
+
+/* convertable-t */
+[ a as: new-unit | quantity -> quantity | unit convert: magnitude to: new-unit ]

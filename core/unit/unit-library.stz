@@ -1,0 +1,84 @@
+#package core
+
+unit-library = (
+  next-id: uint = 2
+  ids: ( class, uint | ) )
+
+[ library unit-id-for: unit | &!unit-library, class -> fraction |
+  ^ids[unit] else [
+    id = next-id
+    next-id = next-id next-prime
+    ids[unit]: id ] ]
+
+#scope private
+[ library unit-suffix-for: unit | &unit-library, class -> string |
+  ^unit name ]
+
+[ library unit-suffix-for: unit | &unit-library, base-unit-t -> string |
+  ^unit class symbol ]
+
+[ library unit-suffix-for: unit | &unit-library, derived-unit-t -> string |
+  ^unit class symbol ]
+
+[ library unit-scaling-for: unit | &unit-library, class -> int |
+  ^1 ]
+
+[ library unit-scaling-for: unit | &unit-library, derived-unit-t -> int |
+  ^unit class scale ]
+
+[ library unit-base-for: unit | &unit-library, class -> base-unit-t |
+  ^unit ]
+
+[ library unit-base-for: unit | &unit-library, derived-unit-t -> base-unit-t |
+  ^unit base ]
+
+
+#scope package
+
+si-unit-prefix = (prefix: string, symbol: string, scale: int)
+
+positive-prefixes = ( si-unit-prefix |
+  {prefix: "quetta", symbol: "Q",  base: 10 ** 30},
+  {prefix: "ronna",  symbol: "R",  base: 10 ** 27},
+  {prefix: "yotta",  symbol: "Y",  base: 10 ** 24},
+  {prefix: "zetta",  symbol: "Z",  base: 10 ** 21},
+  {prefix: "exa",    symbol: "E",  base: 10 ** 18},
+  {prefix: "peta",   symbol: "P",  base: 10 ** 15},
+  {prefix: "tera",   symbol: "T",  base: 10 ** 12},
+  {prefix: "giga",   symbol: "G",  base: 10 ** 9},
+  {prefix: "mega",   symbol: "M",  base: 10 ** 6},
+  {prefix: "kilo",   symbol: "K",  base: 10 ** 3},
+  {prefix: "hecto",  symbol: "h",  base: 10 ** 2},
+  {prefix: "deca",   sybmol: "da", base: 10})
+
+negative-prefixes = ( si-unit-prefix |
+  {prefix: "deci",   symbol: "d",  base: -10},
+  {prefix: "centi",  symbol: "c",  base: 10 ** -2},
+  {prefix: "milli",  symbol: "m",  base: 10 ** -3},
+  {prefix: "micro",  symbol: "µ",  base: 10 ** -6},
+  {prefix: "nano",   symbol: "n",  base: 10 ** -9},
+  {prefix: "pico",   symbol: "p",  base: 10 ** -12},
+  {prefix: "femto",  symbol: "f",  base: 10 ** -15},
+  {prefix: "atto",   symbol: "a",  base: 10 ** -18},
+  {prefix: "zepto",  symbol: "z",  base: 10 ** -21},
+  {prefix: "yocto",  symbol: "y",  base: 10 ** -24},
+  {prefix: "ronto",  symbol: "r",  base: 10 ** -27},
+  {prefix: "quecto", symbol: "q",  base: 10 ** -30})
+
+si-prefixes = positive-prefixes + negative-prefixes
+
+[ base-unit register-derived-unit: unit-name symbol: unit-symbol | unit-t, string, string, int |
+  base-unit register-derived-unit: unit-name symbol: unit-symbol scale: 1 ]
+
+[ base-unit register-derived-unit: unit-name symbol: unit-symbol scale: scale | unit-t, string, string, int |
+  #context public[unit-name]: (derived-unit base: base-unit symbol: unit-symbol scale: scale) ] ]
+
+[ base-unit register-derived-si-prefixes: prefixes | base-unit-t, &list of: si-unit-prefix |
+  base-unit register-derived-si-prefixes: prefixes scale: 1 ]
+
+[ base-unit register-derived-si-prefixes: prefixes scale: scale | base-unit-t, &list of: si-unit-prefix, int |
+  base-unit-name = #context public key-for: base-unit
+  prefixes do: [ prefix |
+    unit-name = prefix name + base-unit-name
+    unit-symbol = prefix symbol + base-unit symbol
+    base-unit register-derived-unit: unit-name symbol: unit-symbol scale: prefix base * int ] ]
